@@ -5,13 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class AccountDto {
-  
-	private Long id;
-	private String accountHolderName;
-	private double balance;
+//@Getter
+//@Setter
+//@NoArgsConstructor
+//@AllArgsConstructor
+//public class AccountDto {
+//
+//	private Long id;
+//	private String accountHolderName;
+//	private double balance;
+//}
+
+public record AccountDto(Long id, String accountHolderName, double balance) {
 }

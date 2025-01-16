@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.bank_app.exception.AccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto getAccountById(Long id) {
 		Account account = accountRepository
 				.findById(id)
-				.orElseThrow(() -> new RuntimeException("Account doesn't exists..."));
+				.orElseThrow(() -> new AccountException("Account doesn't exists..."));
 		return AccountMapper.mapToAccountDto(account);
 	}
 
@@ -40,7 +41,7 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto deposit(Long id, double amount) {
 		Account account = accountRepository
 				.findById(id)
-				.orElseThrow(() -> new RuntimeException("Account doesn't exists..."));
+				.orElseThrow(() -> new AccountException("Account doesn't exists..."));
 		double totalAmount = account.getBalance()+amount;
 		account.setBalance(totalAmount);
 		accountRepository.save(account);
@@ -51,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
 	public AccountDto withdraw(Long id, double amount) {
 		Account account = accountRepository
 				.findById(id)
-				.orElseThrow(() -> new RuntimeException("Account doesn't exists..."));
+				.orElseThrow(() -> new AccountException("Account doesn't exists..."));
 		if(account.getBalance()<amount) {
 			throw new RuntimeException("Insufficient balance...");
 		}
@@ -73,7 +74,7 @@ public class AccountServiceImpl implements AccountService {
 	public void deleteAccount(Long id) {
 		         accountRepository
 				.findById(id)
-				.orElseThrow(() -> new RuntimeException("Account doesn't exists..."));
+				.orElseThrow(() -> new AccountException("Account doesn't exists..."));
 		accountRepository.deleteById(id);
 		
 	}
